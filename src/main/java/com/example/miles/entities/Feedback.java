@@ -1,8 +1,8 @@
 package com.example.miles.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.UUID;
 
 
 @Entity
@@ -10,22 +10,26 @@ import jakarta.persistence.Table;
 public class Feedback {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String image;
     private String feedback;
     private String name;
 
     public Feedback(){}
 
-    public Feedback(int id, String image, String feedback, String name) {
+    public Feedback(String id, String image, String feedback, String name) {
         this.id = id;
         this.image = image;
         this.feedback = feedback;
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return this.id;
+    }
+    public void setId(String id) {
+        this.id = id;
     }
     public String getImage() {
         return this.image;
@@ -50,4 +54,6 @@ public class Feedback {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

@@ -1,0 +1,1 @@
+INSERT INTO feedback(id, image, feedback, name) VALUES (UUID(), 'teste', 'api funcionando', 'Lucas');
