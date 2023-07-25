@@ -1,5 +1,7 @@
 package com.example.miles.resources;
 
+import com.example.miles.dto.FeedbackRecord;
+import com.example.miles.dto.FeedbackRecordRequest;
 import com.example.miles.entities.Feedback;
 import com.example.miles.repository.FeedbackRepository;
 import com.example.miles.services.FeedbackService;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/feedbacks")
@@ -23,15 +26,18 @@ public class FeedbackResource {
     private FeedbackService service;
 
     @GetMapping
-    public ResponseEntity<List<Feedback>> findAll() {
-        List<Feedback> list = service.findAll();
+    public ResponseEntity<List<FeedbackRecord>> findAll() {
+        List<FeedbackRecord> list = service.findAll().stream().map(feedback -> new FeedbackRecord(
+                feedback.getId(),
+                feedback.getFeedback(),
+                feedback.getName())).toList();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<Feedback> findById(@PathVariable String id) {
+    public ResponseEntity<FeedbackRecord> findById(@PathVariable String id) {
         Feedback obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(new FeedbackRecord(obj));
     }
 
     @PostMapping
@@ -59,7 +65,7 @@ public class FeedbackResource {
         if (newObj == null) {
             return ResponseEntity.notFound().build();
         }
-        service.update(newObj, obj);
+        service.update(newObj);
         return ResponseEntity.noContent().build();
     }
 }

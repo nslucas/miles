@@ -46,9 +46,8 @@ public class FeedbackService {
         return repository.save(feedback);
     }
 
-    public Feedback update(Feedback obj, Feedback newObj){
-        repository.getReferenceById(obj.getId());
-        newObj.setImage(obj.getImage());
+    public Feedback update(Feedback obj){
+        Feedback newObj = repository.getReferenceById(obj.getId());
         newObj.setFeedback(obj.getFeedback());
         newObj.setName(obj.getName());
         return repository.save(newObj);

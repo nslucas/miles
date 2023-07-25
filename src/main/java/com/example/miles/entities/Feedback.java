@@ -25,6 +25,11 @@ public class Feedback {
         this.name = name;
     }
 
+    public Feedback(String feedback, String name){
+        this.feedback = feedback;
+        this.name = name;
+    }
+
     public String getId() {
         return this.id;
     }
